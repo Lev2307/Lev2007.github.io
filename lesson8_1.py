@@ -1,4 +1,4 @@
-#cписал, потому что ничего кроме списывания не умею
+#cписал
 alfabet = 'qwertyuiopasdfghjklzxcvbnm'
 
 def count_upper(w):
