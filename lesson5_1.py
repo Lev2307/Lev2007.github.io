@@ -1,3 +1,4 @@
+#Я списал!
 numbers = list(range(20))
 greater_five = []
 for n in numbers:
