@@ -34,11 +34,13 @@ def game():
     print(f'\nДобавляем стартовую локацию')
     field[0][0] = 'x'
     [print(row) for row in field] # Эту часть можешь удалить как поймешь процесс отрисовки поля
+    
+       
+    while gameStatus:
+            user_direction = input('\nВведите направление: ')
 
-    user_direction = input('\nВведите направление: ')
-
-    field = move_player(user_direction, field)
-    print(f'\nПоле после движения направо')
-    [print(row) for row in field] # Эту часть можешь удалить как поймешь процесс отрисовки поля
+            field = move_player(user_direction, field)
+            print(f'\nПоле после движения направо')
+            [print(row) for row in field] # Эту часть можешь удалить как поймешь процесс отрисовки поля
         
 game()
