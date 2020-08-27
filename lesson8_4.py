@@ -1,3 +1,4 @@
+
 def build_template_input():
         """
         output: return str, built-in input() function
@@ -16,6 +17,7 @@ def build_field(size):
         return field # Возвращаем сгенерированное поле
 
 def move_player(direction, field):
+    
     if direction == 'right':
         for row in range(len(field)):
             for col in range(len(field)):
@@ -23,11 +25,25 @@ def move_player(direction, field):
                     field[row][col] = '_'
                     field[row][col+1] = 'x' 
                     break
+    if direction == 'left':
+        for row in range(len(field)):
+            for col in range(len(field)):
+                if field[row][col] == 'x':
+                    field[row][col] = '_'
+                    field[row][col-1] = 'x' 
+                    break
+
+    if direction == 'down':
+        for row in range(len(field)):
+            for col in range(len(field)):
+                if field[row][col] == 'x':
+                    field[row][col] = '_'
+                    field[row+1][col] = 'x' 
+                    break
     return field
 
 def game():
-    gameStatus = True
-
+   
     size_of_template = build_template_input()
     field = build_field(size_of_template)
 
@@ -35,12 +51,12 @@ def game():
     field[0][0] = 'x'
     [print(row) for row in field] # Эту часть можешь удалить как поймешь процесс отрисовки поля
     
-       
+    gameStatus = True
     while gameStatus:
-            user_direction = input('\nВведите направление: ')
+        user_direction = input('\nВведите направление: ')
 
-            field = move_player(user_direction, field)
-            print(f'\nПоле после движения направо')
-            [print(row) for row in field] # Эту часть можешь удалить как поймешь процесс отрисовки поля
+        field = move_player(user_direction, field)
+        [print(row) for row in field] # Эту часть можешь удалить как поймешь процесс отрисовки поля
         
+
 game()
