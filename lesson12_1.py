@@ -25,3 +25,11 @@ golden_apple = Apple('Golden Apple')
 golden_apple.plant()
 for _ in range(5):
     golden_apple.feed()
+
+#     Получим
+# Plant a Golden Apple 
+# 4 times to feed remain!
+# 3 times to feed remain!
+# 2 times to feed remain!
+# 1 times to feed remain!
+# Golden Apple is growing!
