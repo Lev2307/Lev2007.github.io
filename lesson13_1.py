@@ -40,7 +40,7 @@ def notQualityPotion(Potion):
 gamestatus = True
 potions = {}
 
-while True:
+while gamestatus:
     potion_q_n = (input('What potion do you want to make? q - for quality, n - for non quality: ')).lower()
     if potion_q_n == 'exit':
         gamestatus = False
@@ -53,21 +53,21 @@ while True:
     else:
         new_potion = notQualityPotion(potion_name, potion_quality)
         potions[potion_name] = new_potion
-    
-if len(potions) >= 2:
-    action = input(f'Add(+) or Subtract(-) your potions? ').lower()
-    potion1 = potions.popitem()[1]
-    potion2 = potions.popitem()[1]
-    if action == '+':
-        mixed_potion = potion1 + potion2
-    else:
-        mixed_potion = potion1 - potion2
+        
+    if len(potions) >= 2:
+        action = input(f'Add(+) or Subtract(-) your potions? ').lower()
+        potion1 = potions.popitem()[1]
+        potion2 = potions.popitem()[1]
+        if action == '+':
+            mixed_potion = potion1 + potion2
+        else:
+            mixed_potion = potion1 - potion2
 
-print('Start mixin potions...')
-if mixed_potion.get_quality() < 30:
-    print('Kaboom! Potion exploded! You die...')
-    gamestatus = False
-else:
-    potions[mixed_potion.get_name()] = mixed_potion
-    print(f'Your potions: {potions.keys()}')
-    print(f'Potion quality: {mixed_potion.get_quality()}, Be careful next time!')
+    print('Start mixin potions...')
+    if mixed_potion.get_quality() < 30:
+        print('Kaboom! Potion exploded! You die...')
+        gamestatus = False
+    else:
+        potions[mixed_potion.get_name()] = mixed_potion
+        print(f'Your potions: {potions.keys()}')
+        print(f'Potion quality: {mixed_potion.get_quality()}, Be careful next time!')
