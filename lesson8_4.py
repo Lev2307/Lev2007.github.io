@@ -1,5 +1,4 @@
-from random import randint
-
+import random
 obs_percent = 50
 def build_template_input():
         """
@@ -8,14 +7,27 @@ def build_template_input():
         return int(input('Введите размер поля: '))
 
 def build_field(size):
-        field_size = ['_'] * size # Создаем ряд на поле
-        field = [] # Создаем пустое поле
+    '''
+    input: u - user_input_field(int)
+    output: template
+    '''
+    field_size = ['_'] * size 
+    field = [] 
 
-        for _ in range(size):
-            field.append(field_size[:]) # Добавляем нужное количество рядов в нашем поле
-        # print(f'Поле после добавления в него рядов')
-        # [print(row) for row in field] # Эту часть можешь удалить как поймешь процесс отрисовки поля
-        return field # Возвращаем сгенерированное поле
+    for _ in range(size):
+        field.append(field_size[:])
+
+    user_number = size
+    x_pol = []
+    for _ in range(user_number):
+        chance = (2, 5, 7)
+        for _ in range(user_number):
+            rand_int = random.randrange(10)
+            if rand_int in chance:
+                    x_pol.append(['o'])
+            else:
+                    x_pol.append(['_']) 
+    return field
 
 def move_player(direction, field):
     if direction == 'right':
@@ -49,20 +61,11 @@ def move_player(direction, field):
                     return field
     return field
 
-
-def build_obstacles(field1, field):
-    for row in range(len(field)):
-        for col in range(len(field)):
-            if field1 < 5:
-                field[row][col] = 'o'
-                
-    return field
 def game():
    
     size_of_template = build_template_input()
     field = build_field(size_of_template)
 
-    field1 = randint(0, 100)
     field[0][0] = 'x'
     [print(row) for row in field] # Эту часть можешь удалить как поймешь процесс отрисовки поля
     
@@ -70,10 +73,10 @@ def game():
     while gameStatus:
         user_direction = input('\nВыберите одно из направлений: up right down left или exit для выхода ')
 
-        field = obstacles(field1, field)
         field = move_player(user_direction, field)
-            
         if user_direction == 'exit':
             gameStatus = False
+
         [print(row) for row in field] # Эту часть можешь удалить как поймешь процесс отрисовки поля
+
 game()
