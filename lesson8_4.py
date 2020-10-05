@@ -1,5 +1,4 @@
-import random
-obs_percent = 50
+from random import randint
 def build_template_input():
         """
         output: return str, built-in input() function
@@ -7,27 +6,12 @@ def build_template_input():
         return int(input('Введите размер поля: '))
 
 def build_field(size):
-    '''
-    input: u - user_input_field(int)
-    output: template
-    '''
-    field_size = ['_'] * size 
-    field = [] 
-
+    field_size = ['_'] * size # Создаем ряд на поле
+    field = [] # Создаем пустое поле
     for _ in range(size):
-        field.append(field_size[:])
+        field.append(field_size[:]) # Добавляем нужное количество рядов в нашем полe
 
-    user_number = size
-    x_pol = []
-    for _ in range(user_number):
-        chance = (2, 5, 7)
-        for _ in range(user_number):
-            rand_int = random.randrange(10)
-            if rand_int in chance:
-                    x_pol.append(['o'])
-            else:
-                    x_pol.append(['_']) 
-    return field
+    return field # Возвращаем сгенерированное поле
 
 def move_player(direction, field):
     if direction == 'right':
@@ -61,6 +45,15 @@ def move_player(direction, field):
                     return field
     return field
 
+def add_obstacles(field):
+    chance = 50
+    for row in range(len(field)):
+        for col in range(len(field)):
+            if field[row][col] != 'x':
+                r_number = randint(1, 100)
+                if r_number <= chance:
+                    field[row][col] = 'o'
+    return field
 def game():
    
     size_of_template = build_template_input()
@@ -74,6 +67,8 @@ def game():
         user_direction = input('\nВыберите одно из направлений: up right down left или exit для выхода ')
 
         field = move_player(user_direction, field)
+        field = add_obstacles(field)
+
         if user_direction == 'exit':
             gameStatus = False
 
