@@ -57,7 +57,8 @@ def add_obstacles(field):
 def game():
    
     size_of_template = build_template_input()
-    field = build_field(size_of_template)
+    # Инициируем добавление препятствий сразу с полем
+    field = add_obstacles(build_field(size_of_template))
 
     field[0][0] = 'x'
     [print(row) for row in field] # Эту часть можешь удалить как поймешь процесс отрисовки поля
@@ -67,7 +68,7 @@ def game():
         user_direction = input('\nВыберите одно из направлений: up right down left или exit для выхода ')
 
         field = move_player(user_direction, field)
-        field = add_obstacles(field)
+        # field = add_obstacles(field) <- ты каждую итерацию перерисовываешь кругляши
 
         if user_direction == 'exit':
             gameStatus = False
