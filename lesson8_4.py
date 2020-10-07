@@ -46,18 +46,28 @@ def move_player(direction, field):
     return field
 
 def add_obstacles(field):
-    chance = 50
+    chance = 55
     for row in range(len(field)):
         for col in range(len(field)):
             if field[row][col] != 'x':
                 r_number = randint(1, 100)
                 if r_number <= chance:
                     field[row][col] = 'o'
+                    break
     return field
+
+def blocked_obstacle(direction):
+    print(f'Oops... Move to {direction} is blocked!')
+    
+def check_obstacle(direction, field, position):
+    x, y = position
+    status = True
+    if 'direction' == 'up':
+
+
 def game():
    
     size_of_template = build_template_input()
-    # Инициируем добавление препятствий сразу с полем
     field = add_obstacles(build_field(size_of_template))
 
     field[0][0] = 'x'
@@ -68,7 +78,7 @@ def game():
         user_direction = input('\nВыберите одно из направлений: up right down left или exit для выхода ')
 
         field = move_player(user_direction, field)
-        # field = add_obstacles(field) <- ты каждую итерацию перерисовываешь кругляши
+
 
         if user_direction == 'exit':
             gameStatus = False
