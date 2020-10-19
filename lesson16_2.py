@@ -57,19 +57,26 @@ class Wall():
         self.canvas.bind_all('<KeyPress-Right>', self.turn_right)
 
     def turn_left(self, event):
-        if event.keysym == 'Left':
+        # Находим координаты нашей отбивалки
+        pos = self.canvas.coords(self.object)
+        # Проверяем нажатие на клавишу и координаты отбивалки,
+        # если они больше нуля значит мы не вышли еще за левый 
+        # край и можно двигаться в этом направлении.
+        if event.keysym == 'Left' and pos[0] > 0:
             canvas.move(self.object, -10, 0)
 
     def turn_right(self, event):
-        if event.keysym == 'Right':
+        # Смотри метод turn_left
+        pos = self.canvas.coords(self.object)
+        if event.keysym == 'Right' and pos[2] < self.canvas_size:
             canvas.move(self.object, 10, 0)
 
-    def check_position_in_canvas(self):
-        pos_wall = canvas.coords(self.object)
-        if pos_wall[0] < self.canvas_size:
-            canvas.bind_all('<KeyPress-Left>', self.turn_left) = False
-        elif pos_wall[0] < self.canvas_size:
-            canvas.bind_all('<KeyPress-Right>', self.turn_right) = False
+    # def check_position_in_canvas(self):
+    #     pos_wall = canvas.coords(self.object)
+    #     if pos_wall[0] < self.canvas_size:
+    #         canvas.bind_all('<KeyPress-Left>', self.turn_left) = False
+    #     elif pos_wall[0] < self.canvas_size:
+    #         canvas.bind_all('<KeyPress-Right>', self.turn_right) = False
 
 w = Wall()
 c1 = Circle()
