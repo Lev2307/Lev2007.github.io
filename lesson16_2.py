@@ -75,6 +75,7 @@ w = Wall()
 c1 = Circle()
 
 while True:
+    c1.check_collision_with_platform()
     c1.move()
     root.update()
     sleep(0.03)
