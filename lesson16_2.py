@@ -34,19 +34,13 @@ class Circle():
         elif pos[3] >= self.canvas_size:
             self.speed_y *= -1
 
-    def check_collision_with_wall():
-        pos = canvas.coords(self.object)
-        if pos[0] <= 0:
-            self.speed_x *= -1
-        elif pos[1] <= 0:
-            self.speed_y *= -1
-        elif pos[2] >= self.wall_width:
-            self.speed_x *= -1
-        elif pos[3] >= self.wall_width:
+    def check_collision_with_platform(self):
+        pos_platform = w.getter_coords()
+        pos_circle = canvas.coords(self.object)
+        if pos_circle[3] >= pos_platform[1] and pos_circle[2] >= pos_platform[0] and pos_circle[0] <= pos_platform[2] and pos_circle[1] <= pos_platform[3]:
             self.speed_y *= -1
 
-
-class Wall():
+class Wall(Circle):
     def __init__(self):
         self.x = 0
         self.canvas = canvas
@@ -57,26 +51,25 @@ class Wall():
         self.canvas.bind_all('<KeyPress-Right>', self.turn_right)
 
     def turn_left(self, event):
-        # Находим координаты нашей отбивалки
         pos = self.canvas.coords(self.object)
-        # Проверяем нажатие на клавишу и координаты отбивалки,
-        # если они больше нуля значит мы не вышли еще за левый 
-        # край и можно двигаться в этом направлении.
         if event.keysym == 'Left' and pos[0] > 0:
             canvas.move(self.object, -10, 0)
 
     def turn_right(self, event):
-        # Смотри метод turn_left
         pos = self.canvas.coords(self.object)
         if event.keysym == 'Right' and pos[2] < self.canvas_size:
             canvas.move(self.object, 10, 0)
 
-    # def check_position_in_canvas(self):
-    #     pos_wall = canvas.coords(self.object)
-    #     if pos_wall[0] < self.canvas_size:
-    #         canvas.bind_all('<KeyPress-Left>', self.turn_left) = False
-    #     elif pos_wall[0] < self.canvas_size:
-    #         canvas.bind_all('<KeyPress-Right>', self.turn_right) = False
+    def check_collision(self):
+        pos = canvas.coords(self.object)
+        if pos[0] <= 0:
+            canvas.move(self.object, 10, 0)
+        elif pos[2] >= self.canvas_size:
+            canvas.move(self.object, -10, 0)
+
+    def getter_coords(self):
+        posp = canvas.coords(self.object)
+        return posp
 
 w = Wall()
 c1 = Circle()
