@@ -36,7 +36,10 @@ class Board(Tk):
             x += CANVAS_SIZE // RATIO
 
     def render_cross(self, posX, posY):
-        pass
+        f_size = self.figure_size
+        self.canvas.create_line(posX, posY, posX + f_size, posY + f_size, fill='red', width=5)
+        self.canvas.create_line(posX + f_size, posX, posY, posY + f_size, fill='red', width=5)
+
 
     def render_circle(self, posX, posY):
         pass
@@ -44,7 +47,11 @@ class Board(Tk):
     def winner(self, player=None):
         pass
 
+    def click_event(self):
+        pass
+
 
 game_v1 = Board(start_player=FIRST_PLAYER)
 game_v1.build_grid()
+game_v1.render_cross(0, 0)
 game_v1.mainloop()                               
