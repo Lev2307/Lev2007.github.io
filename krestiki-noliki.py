@@ -48,7 +48,15 @@ class Board(Tk):
         self.canvas.create_oval(posX + 5, posY + 5, posX + f_size, posY + f_size, outline='blue', width=5)
 
     def winner(self, player=None):
-        pass
+        """Display end game text, depends on player attribute
+        and shutdown the game"""
+        center = CANVAS_SIZE // 2
+        if player:
+            text = f'Winner: {player}'
+        else:
+            text = 'Draw'
+        self.canvas.create_text(center, center, text=text, fill='lightseagreen', font='Arial 50')
+        self.canvas.unbind('<Button-1>')
 
     def click_event(self):
         pass
@@ -59,8 +67,7 @@ game_v1.build_grid()
 
 
 # Testing
-# game_v1.render_cross(0, 0)
-# game_v1.render_circle(0, 0)
+game_v1.winner('Test')
 
 
 game_v1.mainloop()                               
