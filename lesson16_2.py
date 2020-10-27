@@ -3,19 +3,21 @@ from time import sleep
 
 root = Tk()
 
-canvas = Canvas(root, width=500, height=500, bg='wheat')
+canvas = Canvas(root, width=520, height=520, bg='#eac100')
 canvas.pack()
 
 class Circle():
     def __init__(self):
-        self.x = 10
-        self.y = 10
-        self.size = 25
-        self.speed_x = 3
-        self.speed_y = 2
-        self.canvas_size = 500
+        self.x = 5
+        self.y = 5
+        self.size = 16
+        self.speed_x = 15
+        self.speed_y = 20
+        self.canvas_size = 520
         self.wall_width = 100
-        self.object = canvas.create_oval(self.x, self.y, self.size, self.size, fill='red')
+        self.object = canvas.create_oval(self.x, self.y, self.size, self.size, fill='#0b8457')
+        self.canvas = canvas
+        self.canvas.move(self.object, 120, 120)
 
     def move(self):
         self.x += self.speed_x
@@ -34,19 +36,28 @@ class Circle():
         elif pos[3] >= self.canvas_size:
             self.speed_y *= -1
 
+    def getter_status(self):
+        pos_circle = canvas.coords(self.object)
+        if pos_circle[3] >= self.canvas_size:
+            canvas.delete(ALL)
+            canvas.create_text(280, 260, text="YOU LOSE =( ", justify=CENTER,  font="Arial 30", fill='#3e3636')
+            return False
+        else:
+            return True
+
     def check_collision_with_platform(self):
-        pos_platform = w.getter_coords()
+        pos_platform = p.getter_coords()
         pos_circle = canvas.coords(self.object)
         if pos_circle[3] >= pos_platform[1] and pos_circle[2] >= pos_platform[0] and pos_circle[0] <= pos_platform[2] and pos_circle[1] <= pos_platform[3]:
             self.speed_y *= -1
 
-class Wall(Circle):
+class Platform(Circle):
     def __init__(self):
         self.x = 0
         self.canvas = canvas
-        self.canvas_size = 500
-        self.object = canvas.create_rectangle(0, 0 , 100, 10, fill='blue')
-        self.canvas.move(self.object, 200, 330)
+        self.canvas_size = 520
+        self.object = canvas.create_rectangle(0, 0 , 100, 10, fill='#10316b')
+        self.canvas.move(self.object, 370, 450)
         self.canvas.bind_all('<KeyPress-Left>', self.turn_left)
         self.canvas.bind_all('<KeyPress-Right>', self.turn_right)
 
@@ -71,13 +82,26 @@ class Wall(Circle):
         posp = canvas.coords(self.object)
         return posp
 
-w = Wall()
-c1 = Circle()
+class Wall(Circle):
+    def __init__(self):
+        self.canvas = canvas
+    def create_wall(self):
+        for _ in range(100):
+            self.square = self.canvas.create_rectangle(2, 2, 15, 15, fill='#dee1ec')
+            
 
-while True:
+
+
+w = Wall()
+p = Platform()
+c1 = Circle()
+root.title('Game')
+
+while c1.getter_status():
     c1.check_collision_with_platform()
+    w.create_wall()
     c1.move()
     root.update()
-    sleep(0.03)
+    sleep(0.02)
 
 root.mainloop()
