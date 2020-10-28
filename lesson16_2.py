@@ -8,11 +8,11 @@ canvas.pack()
 
 class Circle():
     def __init__(self):
-        self.x = 5
+        self.x = 0
         self.y = 5
         self.size = 16
-        self.speed_x = 15
-        self.speed_y = 20
+        self.speed_x = 3
+        self.speed_y = 2
         self.canvas_size = 520
         self.wall_width = 100
         self.object = canvas.create_oval(self.x, self.y, self.size, self.size, fill='#0b8457')
@@ -20,9 +20,8 @@ class Circle():
         self.canvas.move(self.object, 120, 120)
 
     def move(self):
-        self.x += self.speed_x
-        self.y += self.speed_y
-        canvas.move(self.object, self.speed_x, self.speed_y)
+        # Тут я поменял способ перемещения у кружка
+        self.canvas.move(self.object, self.speed_x, self.speed_y)
         self.check_collision()
 
     def check_collision(self):
@@ -97,9 +96,11 @@ p = Platform()
 c1 = Circle()
 root.title('Game')
 
+# Лагало из-за этого метода внутри цикла, у тебя каждую итерацию рендерился объект Wall и накладывался на предыдущий
+w.create_wall()
+
 while c1.getter_status():
     c1.check_collision_with_platform()
-    w.create_wall()
     c1.move()
     root.update()
     sleep(0.02)
