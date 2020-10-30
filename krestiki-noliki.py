@@ -20,7 +20,7 @@ class Board(Tk):
         self.canvas.pack()
         self.figure_size = FIGURE_SIZE
         self.current_player = start_player
-        # self.canvas.bind('<Button-1>', self.click_event)
+        self.canvas.bind('<Button-1>', self.click_event)
         self.board = [
             [EMPTY, EMPTY, EMPTY],
             [EMPTY, EMPTY, EMPTY],
@@ -58,16 +58,51 @@ class Board(Tk):
         self.canvas.create_text(center, center, text=text, fill='lightseagreen', font='Arial 50')
         self.canvas.unbind('<Button-1>')
 
-    def click_event(self):
-        pass
+    def click_event(self, event):
+        """Get coordinates of the click, and proccess player/al move"""
+        #player move
+        y_coord = int(event.x // FIGURE_SIZE)
+        x_coord = int(event.y // FIGURE_SIZE)
+        self.make_move(x_coord, y_coord)
 
+    def make_move(self, x, y):
+        position = {0:0, 1: 200, 2: 400}
+        current_player = self.current_player
+        if self.board[x][y] == EMPTY:
+            self.update_board(x, y)
+
+    def update_board(self, x, y):
+        current_player = self.current_player
+        self.board[x][y] = current_player
+        if self.check_win(self.board, current_player):
+            self.winner(current_player)
+        if self.check_draw(self.board):
+            self.winner()
+
+    def check_win(self, board, player):
+        for r in board:
+            if r.count(player) == 3:
+                return True
+        for x in range(len(board)):
+            if board[0][x] == board[1][x] == board[2][x] == player:
+                return True
+        if board[0][0] == board[1][1] == board[2][2] == player:
+            return True
+        if board[0][0] == board[1][1] == board[0][2] == player:
+            return True
+            
+
+    def check_draw(self, board):
+        for row in board:
+            if EMPTY in row:
+                return False
+            return True
 
 game_v1 = Board(start_player=FIRST_PLAYER)
 game_v1.build_grid()
 
 
 # Testing
-game_v1.winner('Test')
 
 
 game_v1.mainloop()                               
