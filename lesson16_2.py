@@ -2,25 +2,26 @@ from tkinter import *
 from time import sleep
 
 root = Tk()
+root.title('Game')
+# Conatants
+EMPTY = NONE
 
-canvas = Canvas(root, width=520, height=520, bg='#eac100')
+canvas = Canvas(root, width=600, height=600, bg='#eac100')
 canvas.pack()
-
 class Circle():
     def __init__(self):
-        self.x = 0
+        self.x = 5
         self.y = 5
-        self.size = 16
-        self.speed_x = 3
-        self.speed_y = 2
-        self.canvas_size = 520
+        self.size = 20
+        self.speed_x = 9
+        self.speed_y = 6
+        self.canvas_size = 600
         self.wall_width = 100
         self.object = canvas.create_oval(self.x, self.y, self.size, self.size, fill='#0b8457')
         self.canvas = canvas
         self.canvas.move(self.object, 120, 120)
 
     def move(self):
-        # Тут я поменял способ перемещения у кружка
         self.canvas.move(self.object, self.speed_x, self.speed_y)
         self.check_collision()
 
@@ -39,7 +40,7 @@ class Circle():
         pos_circle = canvas.coords(self.object)
         if pos_circle[3] >= self.canvas_size:
             canvas.delete(ALL)
-            canvas.create_text(280, 260, text="YOU LOSE =( ", justify=CENTER,  font="Arial 30", fill='#3e3636')
+            canvas.create_text(300, 300, text="YOU LOSE =( ", justify=CENTER,  font="Arial 30", fill='#3e3636')
             return False
         else:
             return True
@@ -54,9 +55,9 @@ class Platform(Circle):
     def __init__(self):
         self.x = 0
         self.canvas = canvas
-        self.canvas_size = 520
+        self.canvas_size = 600
         self.object = canvas.create_rectangle(0, 0 , 100, 10, fill='#10316b')
-        self.canvas.move(self.object, 370, 450)
+        self.canvas.move(self.object, 410, 510)
         self.canvas.bind_all('<KeyPress-Left>', self.turn_left)
         self.canvas.bind_all('<KeyPress-Right>', self.turn_right)
 
@@ -81,28 +82,34 @@ class Platform(Circle):
         posp = canvas.coords(self.object)
         return posp
 
-class Wall(Circle):
+
+class Brick(Circle):
     def __init__(self):
+        self.board = [
+                    [EMPTY, EMPTY, EMPTY],
+                    [EMPTY, EMPTY, EMPTY]]
+        self.square = canvas.create_rectangle(0, 0 , 20, 20, fill='#fff4e3')
         self.canvas = canvas
-    def create_wall(self):
-        for _ in range(100):
-            self.square = self.canvas.create_rectangle(2, 2, 15, 15, fill='#dee1ec')
-            
+        # self.board[len(self.board) - 1] = self.square
+        # print(self.square)
+
+    def draw(self):
+        for row in range(len(self.board)):
+            for col in range(len(self.board)):
+                if self.board[row] == EMPTY:
+                    self.board[len(self.board) - 1][len(self.board) - 1]  = canvas.create_rectangle(0, 0 , 20, 20, fill='black')
+                    print(self.board)
+        return self.board
 
 
-
-w = Wall()
+b = Brick()
 p = Platform()
 c1 = Circle()
-root.title('Game')
-
-# Лагало из-за этого метода внутри цикла, у тебя каждую итерацию рендерился объект Wall и накладывался на предыдущий
-w.create_wall()
-
 while c1.getter_status():
+    b.draw()
     c1.check_collision_with_platform()
     c1.move()
     root.update()
-    sleep(0.02)
+    sleep(0.03)
 
 root.mainloop()
