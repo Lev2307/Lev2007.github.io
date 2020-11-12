@@ -5,7 +5,7 @@ def encode(st):
     variable = ''
     for i in st:
         if i in first_dict:         
-            variable = str(first_dict[i])
+            variable += str(first_dict[i])
         else:            
             variable += i
     return variable
@@ -14,7 +14,7 @@ def decode(st):
     variable = ''
     for i in st:
         if i in second_dict:          
-            variable = str(second_dict[i])
+            variable += str(second_dict[i])
         else:
             variable += i
     return variable
