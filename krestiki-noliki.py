@@ -10,14 +10,14 @@ BG_COLOR = 'black'
 EMPTY = None
 
 # Player setup
-X = 'player 1'
-O = 'player 2'
+X = 'krestik'
+O = 'nolik'
 FIRST_PLAYER = X
 
 class Board(Tk):
     def __init__(self, start_player):
         super().__init__()
-        self.canvas = Canvas(height=CANVAS_SIZE, width=CANVAS_SIZE)
+        self.canvas = Canvas(height=CANVAS_SIZE, width=CANVAS_SIZE, bg='#ebc2af')
         self.canvas.pack()
         self.figure_size = FIGURE_SIZE
         self.current_player = start_player
@@ -27,6 +27,9 @@ class Board(Tk):
             [EMPTY, EMPTY, EMPTY,]]
 
     def build_grid(self, grid_color):
+        """
+            Display grid on the canvas, which depends it on three columns and three rows
+        """
         x = CANVAS_SIZE // RATIO
         y1 = 0
         y2 = CANVAS_SIZE
@@ -37,6 +40,10 @@ class Board(Tk):
 
 
     def render_cross(self, posX, posY):
+        '''
+            Draw two lines, which overlaps in the center of cell
+            Render x on field
+        '''
         f_size = self.figure_size
         self.canvas.create_line(posX, posY, posX + f_size, posY + f_size, fill='red', width=5)
         self.canvas.create_line(posX + f_size, posY, posX, posY + f_size, fill='red', width=5)
@@ -46,7 +53,7 @@ class Board(Tk):
         Render o on field
         '''
         f_size = self.figure_size - 5
-        self.canvas.create_oval(posX + 5, posY + 5, posX + f_size, posY + f_size, outline='green', width=5)
+        self.canvas.create_oval(posX + 5, posY + 5, posX + f_size, posY + f_size, outline='#9fa9be', width=5)
 
     def winner(self, player=None):
         '''Display end game text, depends on player attribute
@@ -58,25 +65,35 @@ class Board(Tk):
         else:
             text = 'Draw'
         
-        self.canvas.create_text(center, center, text=text, fill='white', font='Arial 50')
+        self.canvas.create_text(center, center, text=text, fill='#2c1608', font='Arial 50')
         self.canvas.unbind('<Button-1>')
 
     def click_event(self, event):
+        """
+            Check click, display FIGURE in the cell where player clicked
+        """
         x_coord = int(event.x // FIGURE_SIZE)
         y_coord = int(event.y // FIGURE_SIZE)
-        self.make_move(x_coord, y_coord)
-    def make_move(self, x, y):
-        position = {0: 0, 1: 200, 2: 400}
+        # self.make_move(x_coord, y_coord)
 
-        if self.board[x][y] == EMPTY:
-            self.update_board(x, y)
-            if self.current_player == X:
-                self.render_cross(position[x], position[y])
-            elif self.current_player == O:
-                self.render_circle(position[x], position[y])
-            self.change_player()
+    # def make_move(self, x, y):
+    #     """
+    #         input: x, y - coordinates
+    #         output: 
+    #     """
+    #     position = {0: 0, 1: 200, 2: 400}
+    #     if self.board[x][y] == EMPTY:
+    #         self.update_board(x, y)
+    #         if self.current_player == X:
+    #             self.render_cross(position[x], position[y])
+    #         elif self.current_player == O:
+    #             self.render_circle(position[x], position[y])
+    #         self.change_player()
 
     def update_board(self, x, y):
+        """
+            Determines when there is a draw and when the victory for the circle and for the cross            
+        """
         c_player = self.current_player
         self.board[x][y] = c_player
         if self.check_win(self.board, c_player):
@@ -85,7 +102,10 @@ class Board(Tk):
             self.winner()
 
     def check_win(self, board, player):
-        
+        """
+            input: board - list, player - FIGURE
+            output: check win horizontally vertically, diagonally
+        """ 
         for row in board:
             if row == [player, player, player]:
                 return True
@@ -103,6 +123,10 @@ class Board(Tk):
         return False
         
     def check_draw(self, board):
+        """
+            If make_move has occurred and there is no figure on the cell - update the grid list
+            input: x(int), y(int)
+        """
         for row in board:
             if EMPTY in row:
                 return False
@@ -110,16 +134,18 @@ class Board(Tk):
         return True
 
     def change_player(self):
+        """
+            input: Display player(str)
+            output: display changed player(str)
+        """
         if self.current_player == X:
             self.current_player = O
         else:
             self.current_player = X
+
 # Initialize game object and execute require methods
 game_v1 = Board(start_player=FIRST_PLAYER)
 game_v1.build_grid(BG_COLOR)
-
-# Testing
-# game_v1.winner('Test')
 
 # Run the game
 game_v1.mainloop()
