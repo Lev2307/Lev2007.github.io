@@ -21,12 +21,13 @@ class Options():
         self.y = 5
         self.size = 24
         self.canvas = canvas
-
-    def option_first(self):
-        def click_event(self):
-            pass
+        
+    def click_event(self):
+        pass
+    
+    def option_first(self):    
         self.option_first = canvas.create_text(350, 150, text="5", justify=CENTER,  font="Arial 27", fill=OPTIONS_COLOR)
-        self.circle = canvas.create_oval(self.x, self.y, self.size, self.size, command=click_event(1))
+        self.circle = canvas.create_oval(self.x, self.y, self.size, self.size, command=self.click_event(1)) #Тут self.
         self.canvas.move(self.circle, 305, 135)
     
     def option_second(self):
