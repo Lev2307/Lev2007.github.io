@@ -22,14 +22,11 @@ def first_text_of_question():
 
 def add_element_event(event=None):
     current = entry_field.get()
-    entry_field.insert(0, str(current) + str(event))
+    entry_field.delete(0, END)
+    entry_field.insert(0, str(current) + str())
     answers.append(current)
-
     print(answers)
 
-def another_quest():
-    second_text()
-    second_text_of_question()
 
 def second_text():
     text = Label(master, text="Вам осталось ответить на 2 вопроса", font='Arial 20')
