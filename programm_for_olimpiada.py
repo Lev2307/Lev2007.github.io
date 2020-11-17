@@ -1,92 +1,52 @@
-
 from tkinter import *
 
-root = Tk()
-root.resizable(0, 0)
-root.title('QUIZ')
+master = Tk()
+master.resizable(0,0)
+master.title('OLIMPICS OF PYTHON')
 
-#constants
-BG_COLOR = '#fdfdfd'
-QUESTION_TEXT_COLOR = '#cabbe9'
-OPTIONS_COLOR = '#086972'
+first_answer = {'-3 + 3': '0'}
+second_answer = {'7 * 2': '14'}
+third_answer = {'0 + 1' : '1'}
+answers = []
+first_answer_k = first_answer.values()
+second_answer_k = second_answer.values()
+third_answer_k = third_answer.values()
 
-canvas = Canvas(root, width=1500, height=500, bg=BG_COLOR)
-canvas.pack()
-class Question():
-    def question_first(self):
-        self.text = canvas.create_text(120, 250, text="2 + 2 =", justify=CENTER,  font="Arial 40", fill=QUESTION_TEXT_COLOR)
-        self.line = canvas.create_line(500, 0, 500 ,520, fill='black')
+def first_text():
+    text = Label(master, text="Вам осталось ответить на 3 вопроса", font='Arial 20')
+    text.pack()
 
-    def question_second(self):
-        self.text = canvas.create_text(620, 250, text="2 * 3 =", justify=CENTER,  font="Arial 40", fill=QUESTION_TEXT_COLOR)
-        self.line = canvas.create_line(1000, 0, 1000 , 1020, fill='black')
+def first_text_of_question():
+    question = Label(master, text="-3 + 3", font='Arial 15', bg="red")
+    question.pack()
 
-    def question_third(self):
-        self.text = canvas.create_text(1120, 250, text='-12 + 1 =', justify=CENTER,  font="Arial 40", fill=QUESTION_TEXT_COLOR)
+def add_element_event(event=None):
+    current = entry_field.get()
+    entry_field.insert(0, str(current) + str(event))
+    answers.append(current)
 
-class Options():
-    def __init__(self):
-        self.x = 5
-        self.y = 5
-        self.size = 24
-        self.canvas = canvas
-        questions_and_answers = {
-            '2 + 2': '4',
-            '2 * 3': '6',
-            '-12 + 1': '-11'
-        }
-        questions = questions_and_answers.values()
-        answers = questions_and_answers.keys()
+    print(answers)
 
-    def click_event(self):
-        pass
-    
-    def option_first_of_first_drill(self):    
-        self.option_first = canvas.create_text(350, 150, text="5", justify=CENTER,  font="Arial 27", fill=OPTIONS_COLOR)
-        self.circle = canvas.create_oval(self.x, self.y, self.size, self.size, command=self.click_event()) #Тут self.
-        self.canvas.move(self.circle, 305, 135)
-    
-    def option_second_of_first_drill(self):
-        self.option_second = canvas.create_text(350, 350, text="4", justify=CENTER,  font="Arial 27", fill=OPTIONS_COLOR)
-        self.circle = canvas.create_oval(self.x, self.y, self.size, self.size,)
-        self.canvas.move(self.circle, 305, 335)
-    
-    def option_first_of_second_drill(self):    
-        self.option_first = canvas.create_text(950, 150, text="6", justify=CENTER,  font="Arial 27", fill=OPTIONS_COLOR)
-        self.circle = canvas.create_oval(self.x, self.y, self.size, self.size, command=self.click_event()) #Тут self.
-        self.canvas.move(self.circle, 905, 135)
-    
-    def option_second_of_second_drill(self):
-        self.option_second = canvas.create_text(950, 350, text="7", justify=CENTER,  font="Arial 27", fill=OPTIONS_COLOR)
-        self.circle = canvas.create_oval(self.x, self.y, self.size, self.size,)
-        self.canvas.move(self.circle, 905, 335)
+def another_quest():
+    second_text()
+    second_text_of_question()
 
-    def option_first_of_third_drill(self):    
-        self.option_first = canvas.create_text(1450, 150, text="-13", justify=CENTER,  font="Arial 27", fill=OPTIONS_COLOR)
-        self.circle = canvas.create_oval(self.x, self.y, self.size, self.size, command=self.click_event()) #Тут self.
-        self.canvas.move(self.circle, 1385, 137)
-    
-    def option_second_of_third_drill(self):
-        self.option_second = canvas.create_text(1450, 350, text="-11", justify=CENTER,  font="Arial 27", fill=OPTIONS_COLOR)
-        self.circle = canvas.create_oval(self.x, self.y, self.size, self.size,)
-        self.canvas.move(self.circle, 1385, 337)
+def second_text():
+    text = Label(master, text="Вам осталось ответить на 2 вопроса", font='Arial 20')
+    text.pack()
 
-#classes
-o = Options()
-q = Question()
+def second_text_of_question():
+    question = Label(master, text="7 * 2", font='Arial 15', bg="red")
+    question.pack()
 
-#functions
-q.question_first()
-q.question_second()
-q.question_third()
-#options
-o.option_first_of_first_drill()
-o.option_second_of_first_drill()
-o.option_first_of_second_drill()
-o.option_second_of_second_drill()
-o.option_first_of_third_drill()
-o.option_second_of_third_drill()
+def btn():
+    btn = Button(master, text='Ответ', padx=15, pady=7, command=lambda: add_element_event())
+    btn.pack()
 
+first_text()
+first_text_of_question()
+entry_field = Entry(master,width=40,borderwidth=5)
+entry_field.pack()
+btn()    
 
-
-root.mainloop()
+master.mainloop()
