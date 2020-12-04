@@ -167,3 +167,128 @@ print(union)
 
 intersection = evens.intersection(primes)
 print(intersection)
+
+# STRINGS
+
+my_string = ' Hello world! '
+print(my_string)
+
+no_spaces = my_string.strip()
+print(no_spaces)
+
+to_list = my_string.split()
+print(to_list)
+
+upper = my_string.upper()
+lower = my_string.lower()
+
+first_string = 'Hello world'
+second_string = 'Display beautiful'
+
+collection = [first_string, second_string]
+
+for i in collection:
+    print(i.rjust(20, '#'))
+
+
+some_float = 12.45676
+my_string_format = f'String data: {second_string} -- number data: {some_float:.2f}'
+print(my_string_format)
+
+some_list = [('banana', 5), ('potato', 2), ('tomato', 10)]
+for veg,price in some_list:
+    print(f'name: {veg:<10} price: {price:03d} $')
+
+# Время на данный момент
+from datetime import datetime
+today = "Today's date is {:%Y-%m-%d %H:%M}".format(datetime.now())
+print(today)
+
+string = 'Hello world'
+
+string.startswith('Hello')
+string.endswith('world')
+
+string.find('ell') # return 1
+string.count('l') # return 3
+
+replaced = string.replace('Hello', 'Bye Bye')
+print(replaced)
+
+some_iterable = ['a', 'b', 'c']
+
+my_str = ''.join(some_iterable)
+print(my_str)
+
+# LAMBDA Functions
+
+my_lambda = lambda x: x + 5
+
+print(my_lambda(5))
+
+# та же самая функция
+def my_lambda(x):
+    return x + 5
+
+# Lambdas
+
+my_lambd = lambda x, y: x + y
+print(my_lambd(5, 2))
+
+unsorted_list = [(10, -100), (5, 43), (1000, 97846)]
+
+sorted_list = sorted(unsorted_list, key=lambda x: x[0])
+print(sorted_list)
+
+sorted_list = sorted(unsorted_list, key=lambda x: x[1])
+print(sorted_list)
+
+my_st = '12345'
+
+to_list_of_ints = list(map(lambda x: int(x), my_st))
+print(to_list_of_ints)
+
+my_list = [1, 2, 3 , 5, 4, '6']
+
+converted_list = list(map(lambda x: int(x), my_list))
+print(converted_list)
+
+filter_list = list(filter(lambda x: type(x) is str, my_list))
+print(filter_list)
+
+from functools import reduce
+m_list = [1, 2, 3, 4, 5, 6]
+
+reduced_list = reduce(lambda x, y: x + y, m_list)
+print(reduced_list)
+
+w_list = ['w', 'o', 'r', 'l', 'd']
+reduce_list = reduce(lambda x, y: x + y, w_list)
+print(reduce_list)
+
+# Generation of spiski
+
+only_evens = [i ** 2 for i in range(10) if i ** 2 % 2 == 0]
+print(only_evens)
+
+some_value = False
+my_ternary = 10 if some_value else 20
+
+print(my_ternary)
+
+cub = [i for i in range(100) if i ** 3 % 3 == 0]
+print(cub)
+
+# args and kwards
+def my_func(a, b, *args, **kwards):
+    print(a, b)
+    print(args)
+    print(kwards)
+
+my_func(1, 2, 3, 4, 5, foo=6, bar=7)
+
+def func(a, d, b):
+    print(a, d, b)
+
+some_dict = {'a': 1, 'd': 2, 'b': 3}
+func(**some_dict)
