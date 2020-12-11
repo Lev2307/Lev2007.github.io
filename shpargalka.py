@@ -292,3 +292,139 @@ def func(a, d, b):
 
 some_dict = {'a': 1, 'd': 2, 'b': 3}
 func(**some_dict)
+
+Декораторы
+
+def decorator(func):
+    def wrapper():
+        print('Before')
+        func()
+        print('After')
+    return wrapper
+
+@decorator
+def print_name():
+    print('Mike')
+
+print_name()
+
+def square_decorator(func):
+    def wrapper(*args, **kwards):
+        result = func(*args, **kwards)
+        return result * result
+    return wrapper
+
+
+@square_decorator
+def add_some(x):
+    return x + 5
+
+print(add_some(20))
+
+def repeater(times):
+    def decorator_repeat(func):
+        def wrapper(*args, **kwards):
+            for _ in range(times):
+                result = func(*args, **kwards)
+            return result
+        return wrapper
+    return decorator_repeat
+
+@repeater(times=3)
+def say_hello():
+    print('Hello')
+
+say_hello()
+
+def check_permission(func):
+    def wrapper(*args, **kwards):
+        arg = args[0]
+        user = args[1]
+        if user == 'admin':
+            return func(arg, user)
+        else:
+            return 'Denied'
+    return wrapper
+
+@check_permission
+def extraordinary_func(argument, user):
+    return argument + 10 if user else argument - 10
+
+user = 'admin'
+print(extraordinary_func(10, user))
+
+
+count = 0
+def counter(func):
+    def wrapper(*args, **kwargs):
+        global count
+        result = func(*args, **kwargs)
+        count += 1
+        print(count)
+        return result
+    return wrapper
+
+@counter
+def some_func():
+    print('Hello')
+
+some_func()
+some_func()
+some_func()
+some_func()
+
+
+# Модули и генераторы
+
+from collections import Counter 
+
+my_string = 'aaabbbbcccccdddsds'
+
+my_counter = Counter(my_string)
+print(my_counter)
+
+print(my_counter.most_common(1))
+print(tuple(my_counter.elements()))
+
+from collections import namedtuple
+
+Some_class = namedtuple('Name', 'a, b')
+
+foo = Some_class(1, 2)
+
+print(foo)
+print(foo.a, foo.b)
+
+def my_gen():
+    yield 1
+    yield 2
+    yield 3
+
+gen = my_gen()
+first = next(gen)
+print(first)
+
+def timer(n):
+    print('Starting generator...')
+    while n > 0:
+        yield n
+        n -= 1
+
+count = timer(3)
+
+print(next(count))
+
+import json
+
+my_dict = {"class": "Mage", "level": 5, "items": ["sword", "potion"]}
+
+with open('converted.json', 'w') as f:
+    json.dump(my_dict, f, indent=4)
+
+to_json = json.dumps(my_dict, indent=4)
+print(to_json)
+
+with open('converted.json', 'r') as f:
+    python_data = json.load(f)
+    print(python_data)
+
