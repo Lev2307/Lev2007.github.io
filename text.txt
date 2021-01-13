@@ -1,0 +1,9 @@
+Date and time: 2020-12-24 18:13 
+The name of function is : another_func 
+Function arguments: (1, 2, 3) 
+Result: 5 
+
+Date and time: 2020-12-24 18:13 
+The name of function is : add_one 
+Function arguments: (2, 4, 5) 
+Result: 12
