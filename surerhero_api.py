@@ -49,11 +49,12 @@ class SuperHeroAPI:
     def get_hero_idintification_card(self, name):
         name = self._parse_name(name)
         hero_id = self._get_id(name)
-        hero_int = self._parse_api(self._url + f'/{hero_id}/powerstats/')['intelligence']
-        hero_str = self._parse_api(self._url + f'/{hero_id}/powerstats/')['strength']
-        hero_speed = self._parse_api(self._url + f'/{hero_id}/powerstats/')['speed']
-        hero_power = self._parse_api(self._url + f'/{hero_id}/powerstats/')['power']
-        hero_combat = self._parse_api(self._url + f'/{hero_id}/powerstats/')['combat']
+        stats = self._parse_api(self._url + f'/{hero_id}/powerstats/')
+        hero_int = stats['intelligence']
+        hero_str = stats['strength']
+        hero_speed = stats['speed']
+        hero_power = stats['power']
+        hero_combat = stats['combat']
         print(f'Name: {name}; \nInt: {hero_int}; \nStr: {hero_str}; \nSpd: {hero_speed}; \nRwr: {hero_power}; \nCmbt: {hero_combat}')
         #     
 
