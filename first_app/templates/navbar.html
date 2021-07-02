@@ -1,0 +1,16 @@
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Akaya+Telivigala&display=swap" rel="stylesheet">
+<nav class="navbar">
+    <a class="homepage" href="/">HomePage</a>
+
+    <div class="nav-menu">
+        {% if user.is_authenticated %}
+            <span class="user_nav">user: <a href="/profile/{{ user.id }}">{{ user }}</a></span>
+            <a class="logout" href="/logout">Выйти</a>
+        {% else %}
+            <div class="wrapper">
+                <a class="login" href="/login">Войти</a>
+            </div>
+        {% endif %}
+    </div>
+</nav>
